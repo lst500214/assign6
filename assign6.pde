@@ -1,3 +1,7 @@
+/* the lastest version 
+   updated at 12/15 21:32
+   complete C class requirement
+*/
 class GameState
 {
 	static final int START = 0;
@@ -86,6 +90,7 @@ void draw()
 			}
 		}
 		// 這地方應該加入Fighter 血量顯示UI
+          hpDisplay.updateWithFighterHP(fighter.hp);
 		
 	}
 	else if (state == GameState.END) {
@@ -136,4 +141,3 @@ void keyReleased(){
     }
   }
 }
-
