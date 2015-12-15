@@ -21,17 +21,22 @@ class Enemy{
 		image(enemyImg, x, y);
 	}
 
-	boolean isCollideWithFighter()
-	{
-		return false;
-	}
+  boolean isCollideWithFighter()
+  { 
+    if(isHit(x, y, 61, 61, fighter.x , fighter.y, 51, 51)){
+      return true;
+    }else{
+      return false;
+    }
+  }
 
-	boolean isOutOfBorder()
-	{
-		return false;
-	}
-
-
+  boolean isOutOfBorder()
+  {
+    if(this.x >= width){
+      return true;
+    }
+      return false;
+   }
 }
 
 void addEnemy(int type)
