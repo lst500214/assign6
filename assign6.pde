@@ -1,7 +1,8 @@
 /* the lastest version 
-   updated at 12/15 21:32
-   complete C class requirement
+   updated at 12/17 22:12
+   complete B class requirement
 */
+
 class GameState
 {
 	static final int START = 0;
@@ -32,13 +33,16 @@ class FlightType
 int state = GameState.START;
 int currentType = EnemysShowingType.STRAIGHT;
 int enemyCount = 8;
+int bulletCount = 0;
 Enemy[] enemys = new Enemy[enemyCount];
+Bullet[] bullets = new Bullet[5];
 Fighter fighter;
 Background bg;
 FlameMgr flameMgr;
 Treasure treasure;
 HPDisplay hpDisplay;
 
+//boolean[] isShoot = new boolean[5];
 boolean isMovingUp;
 boolean isMovingDown;
 boolean isMovingLeft;
@@ -56,6 +60,7 @@ void setup () {
 	treasure = new Treasure();
 	hpDisplay = new HPDisplay();
 	fighter = new Fighter(20);
+ 
 }
 
 void draw()
@@ -76,19 +81,32 @@ void draw()
 		}		
 
 		for (int i = 0; i < enemyCount; ++i) {
-			if (enemys[i]!= null) {
-				enemys[i].move();
-				enemys[i].draw();
-				if (enemys[i].isCollideWithFighter()) {
-					fighter.hpValueChange(-20);
-					flameMgr.addFlame(enemys[i].x, enemys[i].y);
-					enemys[i]=null;
-				}
-				else if (enemys[i].isOutOfBorder()) {
-					enemys[i]=null;
-				}
-			}
-		}
+                        
+                        if(enemys[i] != null){   
+                            enemys[i].move();
+                            enemys[i].draw();
+                            
+                            if(bullets[bulletCount] !=null){
+                                println(bulletCount);
+                                bullets[bulletCount].move();
+                                bullets[bulletCount].draw();
+                                
+                              if (enemys[i].isCollideWithFighter()){
+                                  fighter.hpValueChange(-20);
+                                  flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                                  enemys[i]=null;
+                              } else if (bullets[bulletCount].isCollideWithEnemy(enemys[i].x, enemys[i].y))
+                              {
+                                  flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                                  bullets[bulletCount] = null;
+                                  enemys[i]=null;
+                              } else if (enemys[i].isOutOfBorder()) {
+                                  enemys[i]=null;
+                              }
+                        }
+                  }
+          }
+          
 		// 這地方應該加入Fighter 血量顯示UI
           hpDisplay.updateWithFighterHP(fighter.hp);
 		
@@ -125,7 +143,7 @@ void keyReleased(){
   }
   if (key == ' ') {
   	if (state == GameState.PLAYING) {
-		fighter.shoot();
+		fighter.shoot(); 
 	}
   }
   if (key == ENTER) {
