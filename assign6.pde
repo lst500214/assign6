@@ -1,5 +1,5 @@
 /* the lastest version 
-   updated at 12/17 22:12
+   updated at 12/17 22:24
    complete B class requirement
 */
 
@@ -84,28 +84,31 @@ void draw()
                         
                         if(enemys[i] != null){   
                             enemys[i].move();
-                            enemys[i].draw();
-                            
-                            if(bullets[bulletCount] !=null){
-                                bullets[bulletCount].move();
-                                bullets[bulletCount].draw();
-                                
-                              if (enemys[i].isCollideWithFighter()){
+                            enemys[i].draw();      
+                         if (enemys[i].isCollideWithFighter()){
                                   fighter.hpValueChange(-20);
                                   flameMgr.addFlame(enemys[i].x, enemys[i].y);
                                   enemys[i]=null;
-                              } else if (bullets[bulletCount].isCollideWithEnemy(enemys[i].x, enemys[i].y))
-                              {
-                                  flameMgr.addFlame(enemys[i].x, enemys[i].y);
-                                  bullets[bulletCount] = null;
-                                  enemys[i]=null;
-                              } else if (enemys[i].isOutOfBorder()) {
-                                  enemys[i]=null;
-                              }
+                        } else if (enemys[i].isOutOfBorder()) {
+                            enemys[i]=null;
+                        }}
+                        
+                        
+                        if(enemys[i] != null){
+                          if(bullets[bulletCount] !=null){
+                                println(bulletCount);
+                                bullets[bulletCount].move();
+                                bullets[bulletCount].draw();
+                                
+                                if (bullets[bulletCount].isCollideWithEnemy(enemys[i].x, enemys[i].y))
+                                {
+                                    flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                                    bullets[bulletCount] = null;
+                                    enemys[i]=null;
+                                }
+                            }
                         }
-                  }
-          }
-          
+}
 		// 這地方應該加入Fighter 血量顯示UI
           hpDisplay.updateWithFighterHP(fighter.hp);
 		
