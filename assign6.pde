@@ -96,7 +96,6 @@ void draw()
                         
                         if(enemys[i] != null){
                           if(bullets[bulletCount] !=null){
-                                println(bulletCount);
                                 bullets[bulletCount].move();
                                 bullets[bulletCount].draw();
                                 
