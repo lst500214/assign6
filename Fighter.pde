@@ -32,7 +32,15 @@ class Fighter{
 	}
 
 	void shoot() {
-		
+	
+          for (int i=0; i<bullets.length; i++){
+            bullets[i] = new Bullet(fighter.x, fighter.y);
+          }
+          
+          ++bulletCount;
+          if (bulletCount > 4){
+            bulletCount = 0;
+          }
 	}
 
 	void move(int direct) {
