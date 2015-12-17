@@ -10,7 +10,6 @@ class Enemy{
 		this.y = y;
 		this.type = type;
 		enemyImg = loadImage("img/enemy.png");
-		
 	}
 	void move() {
 		this.x+= 5;	
@@ -35,9 +34,8 @@ class Enemy{
     if(this.x >= width){
       return true;
     }
-      return false;
-   }
-}
+      return false;}
+  }
 
 void addEnemy(int type)
 {	
