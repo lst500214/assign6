@@ -4,14 +4,15 @@ class Fighter{
 	int y = 0;
 	int type;
 	int speed = 5;
-
 	int hp;
+  int bulletMax;
 	Fighter(int hp) {
 		this.fighterImg = loadImage("img/fighter.png");
 		this.x = width - this.fighterImg.width;
 		this.y = (height-this.fighterImg.height)/2;
 		this.type = FlightType.FIGHTER;
-		this.hp = hp;
+		this.hp= hp;
+          bulletMax = 0;
 	}
 
 	void draw() {
@@ -30,19 +31,21 @@ class Fighter{
 			this.move(Direction.RIGHT);	
 		}
 	}
-
+  
+   
 	void shoot() {
-	
-          for (int i=0; i<bullets.length; i++){
-            bullets[i] = new Bullet(fighter.x, fighter.y);
-          }
-          
-          ++bulletCount;
-          if (bulletCount > 4){
-            bulletCount = 0;
-          }
-	}
-
+    if(bulletMax < 5){
+      bullets[bulletMax] = new Bullet(x, y);
+      bulletMax++;
+    }else{
+      for(int i = 0; i < bulletMax; i++){
+        if(bullets[i] == null || bullets[i].x < 0){
+          bullets[i] = new Bullet(x, y);
+          break;
+        }
+      }
+    }	
+}
 	void move(int direct) {
 		switch (direct) {
 			case Direction.UP:
