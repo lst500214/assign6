@@ -1,6 +1,7 @@
 /* the lastest version 
-   updated at 12/17 22:24
+   updated at 12/31 10:31
    complete B class requirement
+   and fix some bugs
 */
 
 class GameState
@@ -33,9 +34,9 @@ class FlightType
 int state = GameState.START;
 int currentType = EnemysShowingType.STRAIGHT;
 int enemyCount = 8;
-int bulletCount = 0;
+int bulletCount = 5;
 Enemy[] enemys = new Enemy[enemyCount];
-Bullet[] bullets = new Bullet[5];
+Bullet[] bullets = new Bullet[bulletCount];
 Fighter fighter;
 Background bg;
 FlameMgr flameMgr;
@@ -82,34 +83,37 @@ void draw()
 
 		for (int i = 0; i < enemyCount; ++i) {
                         
-                        if(enemys[i] != null){   
+                        if (enemys[i] != null){   
                             enemys[i].move();
                             enemys[i].draw();      
-                         if (enemys[i].isCollideWithFighter()){
-                                  fighter.hpValueChange(-20);
-                                  flameMgr.addFlame(enemys[i].x, enemys[i].y);
-                                  enemys[i]=null;
-                        } else if (enemys[i].isOutOfBorder()) {
-                            enemys[i]=null;
-                        }}
-                        
-                        
-                        if(enemys[i] != null){
-                          if(bullets[bulletCount] !=null){
-                                bullets[bulletCount].move();
-                                bullets[bulletCount].draw();
-                                
-                                if (bullets[bulletCount].isCollideWithEnemy(enemys[i].x, enemys[i].y))
-                                {
-                                    flameMgr.addFlame(enemys[i].x, enemys[i].y);
-                                    bullets[bulletCount] = null;
-                                    enemys[i]=null;
-                                }
+                            if (enemys[i].isCollideWithFighter()){
+                              fighter.hpValueChange(-20);
+                              flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                              enemys[i]=null;
+                          }
+                          
+                          for(int b = 0; b < bulletCount; b++){
+                            if(bullets[b] != null && enemys[i] != null){
+                              if(enemys[i].isCollideWithBullet(bullets[b])){
+                                flameMgr.addFlame(enemys[i].x, enemys[i].y);
+                                bullets[b] = null;
+                                enemys[i] = null;
+                              }
                             }
+                          }
                         }
+                        
 }
 		// 這地方應該加入Fighter 血量顯示UI
           hpDisplay.updateWithFighterHP(fighter.hp);
+          
+          //display bullets
+          for(int i = 0; i < bulletCount ; i++){
+            if(bullets[i] != null){
+              bullets[i].move();
+              bullets[i].draw();
+            }
+    }
 		
 	}
 	else if (state == GameState.END) {
