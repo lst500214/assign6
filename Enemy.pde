@@ -10,6 +10,7 @@ class Enemy{
 		this.y = y;
 		this.type = type;
 		enemyImg = loadImage("img/enemy.png");
+		
 	}
 	void move() {
 		this.x+= 5;	
@@ -28,14 +29,25 @@ class Enemy{
       return false;
     }
   }
+  
+  boolean isCollideWithBullet(Bullet bullet)
+  { 
+    if(isHit(this.x, this.y, 61, 61, bullet.x , bullet.y, 31, 27)){
+      return true;
+    }
+      return false;
+  }
 
   boolean isOutOfBorder()
   {
     if(this.x >= width){
       return true;
+    }else{
+      return false;
     }
-      return false;}
   }
+   
+}
 
 void addEnemy(int type)
 {	
