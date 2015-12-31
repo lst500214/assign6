@@ -3,26 +3,29 @@ class Bullet{
   int y = 0;
   int speed;
   PImage bulletImg;
-  
-	Bullet(int x, int y) {
-	  this.x = x;
-	  this.y = y;
-          speed = 3;
+
+	Bullet(int x, int y){
+          this.x = x;
+          this.y = y;
+          speed = 5;
           bulletImg = loadImage("img/shoot.png");
 	}
-	
+
   void move(){
-        this.x -= speed;     
+        x -= speed;     
   }
+  
   void draw(){
         image(bulletImg, x, y);
   }
-   boolean isCollideWithEnemy(int ex, int ey)
-  { 
-    if(isHit(x, y, 31, 27, ex , ey, 61, 61)){
-      	return true;
-    }else{
-	return false;
-    }
+
+   boolean isCollideWithEnemy(Enemy enemys)
+  {
+   if(isHit(this.x, this.y, 31, 27, enemys.x , enemys.y, 61, 61)){
+     return true;
+   }
+     return false;
+    
   }
+
 }
